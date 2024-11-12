@@ -1,6 +1,7 @@
-import { httpClient } from "../HttpClient";
+import { sleep } from "../../utils/sleep";
+import { httpClient } from "../httpClient";
 
-interface SingupProps {
+export interface SingupParams {
   name: string;
   email: string;
   password: string;
@@ -10,7 +11,9 @@ interface SignupResponse {
   accessToken: string;
 }
 
-export async function signup(params: SingupProps) {
+export async function signup(params: SingupParams) {
+  await sleep();
+
   const { data } = await httpClient.post<SignupResponse>(
     "/auth/signup",
     params
