@@ -17,7 +17,7 @@ httpClient.interceptors.request.use((config) => {
 });
 
 httpClient.interceptors.response.use(async (data) => {
-  await sleep(1500);
+  await sleep(500);
 
   return data;
 });
