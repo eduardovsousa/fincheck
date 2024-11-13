@@ -15,7 +15,10 @@ export function UserMenu() {
         </div>
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Content className="w-32">
+      <DropdownMenu.Content
+        aria-describedby="dialog-description"
+        className="w-32"
+      >
         <DropdownMenu.Item
           onSelect={signout}
           className="flex items-center justify-between"
