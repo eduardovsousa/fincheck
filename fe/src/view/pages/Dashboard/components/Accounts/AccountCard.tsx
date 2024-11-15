@@ -1,7 +1,7 @@
 import { cn } from "../../../../../app/utils/cn";
 import { formatCurrency } from "../../../../../app/utils/formatCurrency";
 import { BankAccountTypeIcon } from "../../../../components/icons/BankAccountTypeIcon";
-import { useAccountsController } from "./useAccountController";
+import { useAccountsController } from "./useAccountsController";
 
 interface AccountCardProps {
   color: string;

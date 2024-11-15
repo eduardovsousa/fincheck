@@ -1,12 +1,13 @@
 import { httpClient } from "../httpClient";
 
-interface BankAccountResponse {
+type BankAccountResponse = Array<{
+  id: string;
   name: string;
   initialBalance: number;
   type: 'CHECKING' | 'INVESTMENT' | 'CASH';
   color: string;
   currentBalance: number;
-}
+}>
 
 
 export async function getAll() {
