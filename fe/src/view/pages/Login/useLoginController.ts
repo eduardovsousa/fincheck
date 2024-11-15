@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useAuth } from "../../../app/hooks/useAuth";
 import { authService } from "../../../app/services/authService";
-import { SinginProps } from "../../../app/services/authService/signin";
+import { SigninProps } from "../../../app/services/authService/signin";
 
 const schema = z.object({
   email: z
@@ -32,7 +32,7 @@ export function useLoginController() {
 
   const { mutateAsync, isLoading } = useMutation({
     mutationKey: ["signin"],
-    mutationFn: async (data: SinginProps) => {
+    mutationFn: async (data: SigninProps) => {
       return authService.signin(data);
     },
   });

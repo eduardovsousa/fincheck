@@ -1,6 +1,6 @@
 import { httpClient } from "../httpClient";
 
-export interface SinginProps {
+export interface SigninProps {
   email: string;
   password: string;
 }
@@ -9,7 +9,7 @@ interface SigninResponse {
   accessToken: string;
 }
 
-export async function signin(params: SinginProps) {
+export async function signin(params: SigninProps) {
   const { data } = await httpClient.post<SigninResponse>(
     "/auth/signin",
     params
