@@ -20,7 +20,7 @@ export function Accounts() {
     accounts,
     openNewAccountModal,
     toggleValueVisibily,
-    currentBalance
+    currentBalance,
   } = useAccountsController();
 
   return (
@@ -108,12 +108,7 @@ export function Accounts() {
 
                   {accounts.map((account) => (
                     <SwiperSlide key={account.id}>
-                      <AccountCard
-                        balance={account.currentBalance}
-                        color={account.color}
-                        name={account.name}
-                        type={account.type}
-                      />
+                      <AccountCard data={account} />
                     </SwiperSlide>
                   ))}
                 </Swiper>
