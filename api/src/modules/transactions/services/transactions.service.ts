@@ -14,7 +14,7 @@ export class TransactionsService {
     private readonly validateBankAccountOwnershipService: ValidateBankAccountOwnershipService,
     private readonly validateCategoryOwnershipService: ValidateCategoryOwnershipService,
     private readonly validateTransactionOwnershipService: ValidateTransactionOwnershipService,
-  ) {}
+  ) { }
 
   async create(userId, createTransactionDto: CreateTransactionDto) {
     const { bankAccountId, categoryId, date, name, type, value } =
@@ -54,6 +54,9 @@ export class TransactionsService {
           lt: new Date(Date.UTC(filters.year, filters.month + 1)),
         },
       },
+      include: {
+        category: { select: { id: true, name: true, icon: true } }
+      }
     });
   }
 
@@ -105,19 +108,19 @@ export class TransactionsService {
   }) {
     await Promise.all([
       bankAccountId &&
-        this.validateBankAccountOwnershipService.validate(
-          userId,
-          bankAccountId,
-        ),
+      this.validateBankAccountOwnershipService.validate(
+        userId,
+        bankAccountId,
+      ),
 
       categoryId &&
-        this.validateCategoryOwnershipService.validate(userId, categoryId),
+      this.validateCategoryOwnershipService.validate(userId, categoryId),
 
       transactionId &&
-        this.validateTransactionOwnershipService.validate(
-          userId,
-          transactionId,
-        ),
+      this.validateTransactionOwnershipService.validate(
+        userId,
+        transactionId,
+      ),
     ]);
   }
 }
