@@ -40,3 +40,8 @@ export const colors: Color[] = [
   { color: '#FD7E14', bg: '#FFF4E6' },
   { color: '#212529', bg: '#F8F9FA' },
 ];
+
+export const TRANSACTIONS_TYPES = [
+  'INCOME',
+  'EXPENSE'
+]
