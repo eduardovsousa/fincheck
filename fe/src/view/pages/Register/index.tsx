@@ -1,10 +1,14 @@
+import { Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { formatPhone } from "../../../app/utils/formatPhone";
 import { Button } from "../../components/Button";
+import { DatePickerInput } from "../../components/DatePickerInput";
 import { Input } from "../../components/Input";
 import { useRegisterController } from "./useRegisterController";
 
 export function Register() {
-  const { errors, handleSubmit, register, isLoading } = useRegisterController();
+  const { errors, handleSubmit, register, isLoading, control } =
+    useRegisterController();
 
   return (
     <>
@@ -26,23 +30,67 @@ export function Register() {
       </header>
 
       <form onSubmit={handleSubmit} className="mt-[60px] flex flex-col gap-4">
-        <Input
-          placeholder="Nome"
-          error={errors.name?.message}
-          {...register("name")}
-        />
-        <Input
-          type="email"
-          placeholder="E-mail"
-          error={errors.email?.message}
-          {...register("email")}
-        />
-        <Input
-          type="password"
-          placeholder="Senha"
-          error={errors.password?.message}
-          {...register("password")}
-        />
+        <div className="flex space-x-2">
+          <Input
+            placeholder="Nome"
+            {...register("firstName")}
+            error={errors.firstName?.message}
+          />
+          <Input
+            placeholder="Sobrenome"
+            {...register("lastName")}
+            error={errors.lastName?.message}
+          />
+        </div>
+
+        <div className="flex space-x-2 w-full">
+          <Controller
+            control={control}
+            name="birthdate"
+            defaultValue={new Date()}
+            render={({ field: { value, onChange } }) => (
+              <DatePickerInput
+                className="w-full"
+                error={errors.birthdate?.message}
+                value={value}
+                onChange={onChange}
+              />
+            )}
+          />
+        </div>
+        <div className="flex space-x-2">
+          <Input
+            type="email"
+            className="lowercase"
+            placeholder="E-mail"
+            {...register("email")}
+            error={errors.email?.message}
+          />
+          <Input
+            minLength={14}
+            maxLength={15}
+            placeholder="(xx) 9xxxx-xxxx"
+            {...register("phone")}
+            error={errors.phone?.message}
+            onChange={(e) => {
+              e.target.value = formatPhone(e.target.value);
+            }}
+          />
+        </div>
+        <div className="flex space-x-2">
+          <Input
+            type="password"
+            placeholder="Senha"
+            {...register("password")}
+            error={errors.password?.message}
+          />{" "}
+          <Input
+            type="password"
+            placeholder="Confirme a senha"
+            {...register("confirmPassword")}
+            error={errors.confirmPassword?.message}
+          />
+        </div>
 
         <Button type="submit" className="mt-2" isLoading={isLoading}>
           Criar conta

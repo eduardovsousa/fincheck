@@ -10,7 +10,8 @@ export function UserMenu() {
       <DropdownMenu.Trigger>
         <div className="rounded-full bg-teal-50 w-12 h-12 flex items-center justify-center border border-teal-100 cursor-pointer">
           <span className="text-sm tracking-[-0.5px] text-teal-900 font-medium">
-            {user?.name.slice(0, 2).toUpperCase()}
+            {user?.firstName?.charAt(0).toUpperCase()}
+            {user?.lastName?.charAt(0).toUpperCase()}
           </span>
         </div>
       </DropdownMenu.Trigger>

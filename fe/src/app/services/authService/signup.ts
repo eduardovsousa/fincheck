@@ -2,9 +2,13 @@ import { sleep } from "../../utils/sleep";
 import { httpClient } from "../httpClient";
 
 export interface SingupParams {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
+  birthdate: Date;
+  phone: string;
   password: string;
+  confirmPassword: string;
 }
 
 interface SignupResponse {
