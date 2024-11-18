@@ -10,11 +10,21 @@ class Env {
   @IsNotEmpty()
   @NotEquals('unsecure_jwt_secret')
   jwtSecret: string;
+
+  @IsString()
+  @IsNotEmpty()
+  mailgunToken: string;
+
+  @IsString()
+  @IsNotEmpty()
+  mailgunDomain: string;
 }
 
 export const env: Env = plainToInstance(Env, {
   jwtSecret: process.env.JWT_SECRET,
   dbURL: process.env.DATABASE_URL,
+  mailgunToken: process.env.MAILGUN_API_KEY,
+  mailgunDomain: process.env.MAILGUN_DOMAIN,
 });
 
 const errors = validateSync(env);

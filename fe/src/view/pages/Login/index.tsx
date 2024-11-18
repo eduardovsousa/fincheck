@@ -43,6 +43,15 @@ export function Login() {
           Entrar
         </Button>
       </form>
+
+      <footer className="flex flex-col items-start gap-4 mt-4 text-center">
+        <Link
+          to="/reset-password"
+          className="text-teal-900 font-medium tracking-[-0.5px]"
+        >
+          Esqueci minha senha
+        </Link>
+      </footer>
     </>
   );
 }

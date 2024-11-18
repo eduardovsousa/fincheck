@@ -3,6 +3,7 @@ import { AuthLayout } from "../view/layouts/AuthLayout";
 import { Dashboard } from "../view/pages/Dashboard";
 import { Login } from "../view/pages/Login";
 import { Register } from "../view/pages/Register";
+import { ResetPassword } from "../view/pages/ResetPassword";
 import { AuthGuard } from "./AuthGuard";
 
 export function Router() {
@@ -13,6 +14,7 @@ export function Router() {
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
           </Route>
         </Route>
 
