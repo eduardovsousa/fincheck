@@ -9,6 +9,7 @@ import emptyStateImage from "../../../../../assets/empty-state.svg";
 import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
 import { FilterIcon } from "../../../../components/icons/FilterIcon";
 import { Spinner } from "../../../../components/Spinner";
+import { EditTransactionModal } from "../../modals/EditTransactionModal";
 import { FiltersModal } from "./FiltersModal";
 import { SliderNavigation } from "./SliderNavigation";
 import { SliderOption } from "./SliderOption";
@@ -27,6 +28,10 @@ export function Transactions() {
     handleChangeFilters,
     filters,
     handleApplyFilters,
+    handleOpenEditModal,
+    handleCloseEditModal,
+    isEditModalOpen,
+    transactionBeingEdited,
   } = useTransactionsController();
 
   const hasTransactions = transactions.length > 0;
@@ -101,48 +106,60 @@ export function Transactions() {
               </div>
             )}
 
-            {hasTransactions &&
-              !isLoading &&
-              transactions.map((transaction) => (
-                <div
-                  key={transaction.id}
-                  className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4"
-                >
-                  <div className="flex-1 flex items-center gap-3">
-                    <CategoryIcon
-                      type={
-                        transaction.type === "EXPENSE" ? "expense" : "income"
-                      }
-                      category={transaction.category?.icon}
-                    />
+            {hasTransactions && !isLoading && (
+              <>
+                {transactionBeingEdited && (
+                  <EditTransactionModal
+                    open={isEditModalOpen}
+                    onClose={handleCloseEditModal}
+                    transaction={transactionBeingEdited}
+                  />
+                )}
 
-                    <div className="">
-                      <strong className="font-bold tracking-[-0.5px] block">
-                        {transaction.name}
-                      </strong>
-                      <span className="text-sm text-gray-600">
-                        {formatDate(new Date(transaction.date))}
-                      </span>
-                    </div>
-                  </div>
-
-                  <span
-                    className={cn(
-                      "tracking-[-0.5px] font-medium",
-                      transaction.type === "EXPENSE"
-                        ? "text-red-800"
-                        : "text-green-800",
-                      !areValuesVisible && "blur-sm"
-                    )}
+                {transactions.map((transaction) => (
+                  <div
+                    key={transaction.id}
+                    className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4"
+                    role="button"
+                    onClick={() => handleOpenEditModal(transaction)}
                   >
-                    {!areValuesVisible
-                      ? "R$ 000,00"
-                      : `${
-                          transaction.type === "EXPENSE" ? "-" : "+"
-                        } ${formatCurrency(transaction.value)}`}
-                  </span>
-                </div>
-              ))}
+                    <div className="flex-1 flex items-center gap-3">
+                      <CategoryIcon
+                        type={
+                          transaction.type === "EXPENSE" ? "expense" : "income"
+                        }
+                        category={transaction.category?.icon}
+                      />
+
+                      <div className="">
+                        <strong className="font-bold tracking-[-0.5px] block">
+                          {transaction.name}
+                        </strong>
+                        <span className="text-sm text-gray-600">
+                          {formatDate(new Date(transaction.date))}
+                        </span>
+                      </div>
+                    </div>
+
+                    <span
+                      className={cn(
+                        "tracking-[-0.5px] font-medium",
+                        transaction.type === "EXPENSE"
+                          ? "text-red-800"
+                          : "text-green-800",
+                        !areValuesVisible && "blur-sm"
+                      )}
+                    >
+                      {!areValuesVisible
+                        ? "R$ 000,00"
+                        : `${
+                            transaction.type === "EXPENSE" ? "-" : "+"
+                          } ${formatCurrency(transaction.value)}`}
+                    </span>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </>
       )}
