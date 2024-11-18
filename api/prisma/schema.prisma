@@ -14,10 +14,19 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid()) @db.Uuid
-  name     String
-  email    String @unique
-  password String
+  id             String    @id @default(uuid()) @db.Uuid
+  role           String    @default("user")
+  firstName      String
+  lastName       String    @map("last_name")
+  email          String    @unique
+  password       String
+  birthdate      String    @map("birth_date")
+  phone          String    @unique
+  otpCode        Int?
+  otpAttempts    Int?      @default(0)
+  lastOtpAttempt DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
   bankAccounts BankAccount[]
   categories   Category[]

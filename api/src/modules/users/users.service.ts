@@ -9,7 +9,10 @@ export class UsersService {
     const user = await this.usersRepo.findUnique({
       where: { id: userId },
       select: {
-        name: true,
+        firstName: true,
+        lastName: true,
+        birthdate: true,
+        phone: true,
         email: true,
       },
     });

@@ -39,7 +39,17 @@ export class AuthService {
   }
 
   async signup(signupDto: SignupDto) {
-    const { name, email, password } = signupDto;
+    const {
+      firstName,
+      lastName,
+      birthdate,
+      phone,
+      email,
+      password,
+      confirmPassword,
+    } = signupDto;
+
+    signupDto.role = 'user';
 
     const emailTaken = await this.userRepo.findUnique({
       where: { email },
@@ -50,12 +60,29 @@ export class AuthService {
       throw new ConflictException('Este e-mail já está em uso.');
     }
 
+    const phoneTaken = await this.userRepo.findUnique({
+      where: { phone },
+      select: { id: true },
+    });
+
+    if (phoneTaken) {
+      throw new ConflictException('Este telefone já está em uso.');
+    }
+
+    if (password !== confirmPassword) {
+      throw new ConflictException('As senhas não coincidem');
+    }
+
     const hashedPassword = await hash(password, 12);
 
     const user = await this.userRepo.create({
       data: {
-        name,
+        firstName,
+        lastName,
+        birthdate,
+        phone,
         email,
+        role: signupDto.role,
         password: hashedPassword,
         categories: {
           createMany: {
