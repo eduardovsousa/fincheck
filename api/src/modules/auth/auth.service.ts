@@ -175,7 +175,7 @@ export class AuthService {
                                                     <span
                                                         style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                                     <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">Segue o código de verificação para seguir com o processo de alteração de senha.<br/>Insira o código abaixo no navegador para continuar:</p>
-            <span style="background:#1f3566;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;"> &nbsp; &nbsp;${otpCode} &nbsp; &nbsp;</span>
+            <span style="background:#087f5b;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;"> &nbsp; &nbsp;${otpCode} &nbsp; &nbsp;</span>
                                                   
                                                   <p style="color:#455056; font-size:15px;line-height:24px; margin-top:35px;font-style: italic;">Caso você não tenha solicitado, basta ignorar.</p>
                                                 </td>
