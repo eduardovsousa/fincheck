@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { MONTHS } from "../../../../../app/config/constants";
 import { cn } from "../../../../../app/utils/cn";
 import { formatCurrency } from "../../../../../app/utils/formatCurrency";
+import { formatDate } from "../../../../../app/utils/formatDate";
 import emptyStateImage from "../../../../../assets/empty-state.svg";
 import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
 import { FilterIcon } from "../../../../components/icons/FilterIcon";
@@ -13,7 +14,6 @@ import { SliderNavigation } from "./SliderNavigation";
 import { SliderOption } from "./SliderOption";
 import { TransactionTypeDropdown } from "./TransactionTypeDropdown";
 import { useTransactionsController } from "./useTransactionsController";
-import { formatDate } from "../../../../../app/utils/formatDate";
 
 export function Transactions() {
   const {
@@ -24,6 +24,8 @@ export function Transactions() {
     isFiltersModalOpen,
     handleCloseFiltersModal,
     handleOpenFiltersModal,
+    handleChangeMonth,
+    filters,
   } = useTransactionsController();
 
   const hasTransactions = transactions.length > 0;
@@ -52,7 +54,14 @@ export function Transactions() {
             </div>
 
             <div className="mt-6 relative">
-              <Swiper slidesPerView={3} centeredSlides>
+              <Swiper
+                slidesPerView={3}
+                centeredSlides
+                initialSlide={filters.month}
+                onSlideChange={(swiper) => {
+                  handleChangeMonth(swiper.realIndex);
+                }}
+              >
                 <SliderNavigation />
                 {MONTHS.map((month, index) => (
                   <SwiperSlide key={month}>

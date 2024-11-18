@@ -1,21 +1,19 @@
 import { Transaction } from "../../entities/Transaction";
 import { httpClient } from "../httpClient";
 
-type TransactionsResponse = Array<Transaction>
+type TransactionsResponse = Array<Transaction>;
 
-type TransactionsFilters = {
+export type TransactionsFilters = {
   month: number;
   year: number;
   bankAccountId?: string;
-  type?: Transaction['type'];
-}
+  type?: Transaction["type"];
+};
 
 export async function getAll(filters: TransactionsFilters) {
-  const { data } = await httpClient.get<TransactionsResponse>(
-    `/transactions`, {
-    params: filters
-  }
-  );
+  const { data } = await httpClient.get<TransactionsResponse>(`/transactions`, {
+    params: filters,
+  });
 
   return data;
 }
