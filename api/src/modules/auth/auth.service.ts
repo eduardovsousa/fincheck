@@ -160,13 +160,6 @@ export class AuthService {
                                     <td style="height:80px;">&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align:center;">
-                                      <a href="https://euro17esportes.com.br/" title="logo" target="_blank">
-                                        <img width="60" src="https://yt3.googleusercontent.com/oTev7Rz0eHRGK_sl6pMriaUPlHxz5XZtp6CPlQjunYQGnvyvB1SMI1owfpQidm0CA5-aLtb3n8w=s900-c-k-c0x00ffffff-no-rj" title="logo" alt="logo">
-                                      </a>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td style="height:20px;">&nbsp;</td>
                                 </tr>
                                 <tr>
@@ -197,7 +190,7 @@ export class AuthService {
                                 </tr>
                                 <tr>
                                     <td style="text-align:center;">
-                                        <p style="font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">&copy; <strong>https://euro17esportes.com.br/</strong></p>
+                                        <p style="font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">&copy; <strong>fincheck &copy;</strong></p>
                                     </td>
                                 </tr>
                                 <tr>
