@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -45,6 +45,12 @@ export function useEditTransactionModalController(
 
   const { accounts } = useBankAccounts();
   const { categories: categoriesList } = useCategories();
+  const { isLoading, mutateAsync: updateTransaction } = useMutation(
+    transactionsService.update
+  );
+  const queryClient = useQueryClient();
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const categories = useMemo(() => {
     return categoriesList.filter(
@@ -52,12 +58,9 @@ export function useEditTransactionModalController(
     );
   }, [categoriesList, transaction]);
 
-  const { isLoading, mutateAsync } = useMutation(transactionsService.update);
-  const queryClient = useQueryClient();
-
   const handleSubmit = hookFormSubmit(async (data) => {
     try {
-      await mutateAsync({
+      await updateTransaction({
         ...data,
         id: transaction!.id,
         value: currencyStringToNumber(data.value),
@@ -81,6 +84,37 @@ export function useEditTransactionModalController(
     }
   });
 
+  function handleOpenDeleteModal() {
+    setIsDeleteModalOpen(true);
+  }
+
+  function handleCloseDeleteModal() {
+    setIsDeleteModalOpen(false);
+  }
+
+  const { isLoading: isLoadingDelete, mutateAsync: removeTransaction } =
+    useMutation(transactionsService.remove);
+
+  async function handleDeleteTransaction() {
+    try {
+      await removeTransaction(transaction!.id);
+
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      toast.success(
+        `${
+          transaction?.type === "EXPENSE" ? "Despesa" : "Receita"
+        } excluída com sucesso!`
+      );
+      handleCloseDeleteModal();
+    } catch {
+      toast.error(
+        `Erro ao excluir ${
+          transaction?.type === "EXPENSE" ? "despesa" : "receita"
+        }!`
+      );
+    }
+  }
+
   return {
     register,
     errors,
@@ -89,5 +123,10 @@ export function useEditTransactionModalController(
     accounts,
     categories,
     isLoading,
+    isDeleteModalOpen,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+    handleDeleteTransaction,
+    isLoadingDelete,
   };
 }
