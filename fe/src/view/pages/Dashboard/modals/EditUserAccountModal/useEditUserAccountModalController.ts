@@ -1,9 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
 import { User } from "../../../../../app/entities/User";
+import { useAuth } from "../../../../../app/hooks/useAuth";
 import { usersService } from "../../../../../app/services/usersService";
 import { useDashboardContext } from "../../components/DashboardContext/useDashboardContext";
 
@@ -41,6 +43,11 @@ export function useEditUserAccountModalController(user: User | null) {
     isEditUserAccountModalOpen,
   } = useDashboardContext();
 
+  const { signout } = useAuth();
+
+  const [isDeleteAccountModalOpen, setIsDeleteAccountModalOpen] =
+    useState(false);
+
   const { isLoading, mutateAsync: updateUser } = useMutation(
     usersService.update
   );
@@ -62,6 +69,30 @@ export function useEditUserAccountModalController(user: User | null) {
     }
   });
 
+  function handleOpenDeleteAccountModal() {
+    setIsDeleteAccountModalOpen(true);
+  }
+
+  function handleCloseDeleteAccountModal() {
+    setIsDeleteAccountModalOpen(false);
+  }
+
+  const { isLoading: isLoadingDeleteAccount, mutateAsync: removeTransaction } =
+    useMutation(usersService.remove);
+
+  async function handleDeleteTransaction() {
+    try {
+      await removeTransaction(user!.id);
+
+      toast.success(`Conta excluída com sucesso!`);
+      handleCloseDeleteAccountModal();
+      signout();
+      queryClient.invalidateQueries({ queryKey: ["users", "me"] });
+    } catch {
+      toast.error(`Erro ao excluir conta!`);
+    }
+  }
+
   return {
     handleSubmit,
     openEditUserAccountModal,
@@ -72,5 +103,10 @@ export function useEditUserAccountModalController(user: User | null) {
     register,
     control,
     errors,
+    handleOpenDeleteAccountModal,
+    handleCloseDeleteAccountModal,
+    isDeleteAccountModalOpen,
+    handleDeleteTransaction,
+    isLoadingDeleteAccount,
   };
 }
