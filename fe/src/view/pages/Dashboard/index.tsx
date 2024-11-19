@@ -15,7 +15,7 @@ export function Dashboard() {
   return (
     <DashboardProvicer>
       <DashboardContext.Consumer>
-        {({ accountBeingEdited }) => (
+        {({ bankAccountBeingEdited }) => (
           <div className="h-full w-full p-4 md:px-8 md:pb-8 md:pt-6 flex flex-col gap-4">
             <header className="h-12 flex items-center justify-between">
               <Logo className="h-6 text-teal-900" />
@@ -34,7 +34,7 @@ export function Dashboard() {
             <Fab />
             <NewBankAccountModal />
             <NewTransactionModal />
-            {accountBeingEdited && <EditBankAccountModal />}
+            {bankAccountBeingEdited && <EditBankAccountModal />}
           </div>
         )}
       </DashboardContext.Consumer>

@@ -24,7 +24,7 @@ export function useEditBankAccountModalController() {
   const {
     isEditBankAccountModalOpen,
     closeEditBankAccountModal,
-    accountBeingEdited,
+    bankAccountBeingEdited,
   } = useDashboardContext();
 
   const {
@@ -35,10 +35,10 @@ export function useEditBankAccountModalController() {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      color: accountBeingEdited?.color,
-      name: accountBeingEdited?.name,
-      type: accountBeingEdited?.type,
-      initialBalance: accountBeingEdited?.currentBalance,
+      color: bankAccountBeingEdited?.color,
+      name: bankAccountBeingEdited?.name,
+      type: bankAccountBeingEdited?.type,
+      initialBalance: bankAccountBeingEdited?.currentBalance,
     },
   });
 
@@ -57,7 +57,7 @@ export function useEditBankAccountModalController() {
       await updateAccount({
         ...data,
         initialBalance: currencyStringToNumber(data.initialBalance),
-        id: accountBeingEdited!.id,
+        id: bankAccountBeingEdited!.id,
       });
 
       queryClient.invalidateQueries({ queryKey: ["bankAccounts"] });
@@ -78,7 +78,7 @@ export function useEditBankAccountModalController() {
 
   async function handleDeleteAccount() {
     try {
-      await removeAccount(accountBeingEdited!.id);
+      await removeAccount(bankAccountBeingEdited!.id);
 
       queryClient.invalidateQueries({ queryKey: ["bankAccounts"] });
       toast.success("Conta excluída com sucesso!");

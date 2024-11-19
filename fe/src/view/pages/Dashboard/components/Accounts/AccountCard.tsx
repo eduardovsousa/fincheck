@@ -9,7 +9,7 @@ interface AccountCardProps {
 }
 
 export function AccountCard({ data }: AccountCardProps) {
-  const { areValuesVisible, openEditAccountModal } = useDashboardContext();
+  const { areValuesVisible, openEditBankAccountModal } = useDashboardContext();
 
   const { currentBalance, color, name, type } = data;
 
@@ -19,7 +19,7 @@ export function AccountCard({ data }: AccountCardProps) {
       style={{ borderColor: color }}
       role="button"
       onClick={() => {
-        openEditAccountModal(data);
+        openEditBankAccountModal(data);
       }}
     >
       <div className="">

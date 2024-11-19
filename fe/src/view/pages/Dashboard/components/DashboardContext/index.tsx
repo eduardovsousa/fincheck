@@ -1,20 +1,25 @@
 import { createContext, useCallback, useState } from "react";
 import { BankAccount } from "../../../../../app/entities/BankAccount";
+import { User } from "../../../../../app/entities/User";
 
 interface DashboardContextProps {
   areValuesVisible: boolean;
   isNewBankAccountModalOpen: boolean;
   isNewTransactionModal: boolean;
   isEditBankAccountModalOpen: boolean;
-  accountBeingEdited: null | BankAccount;
+  isEditUserAccountModalOpen: boolean;
+  bankAccountBeingEdited: null | BankAccount;
+  userAccountBeingEdited: null | User;
   newTransactionType: "INCOME" | "EXPENSE" | null;
   toggleValueVisibily(): void;
   openNewBankAccountModal(): void;
   closeNewBankAccountModal(): void;
   openNewTransactionModal(type: "INCOME" | "EXPENSE"): void;
   closeNewTransactionModal(): void;
-  openEditAccountModal(bankAccount: BankAccount): void;
+  openEditBankAccountModal(bankAccount: BankAccount): void;
   closeEditBankAccountModal(): void;
+  openEditUserAccountModal(userAccount: User): void;
+  closeEditUserAccountModal(): void;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -30,8 +35,12 @@ export function DashboardProvicer({ children }: { children: React.ReactNode }) {
   >(null);
   const [isEditBankAccountModalOpen, setisEditBankAccountModalOpen] =
     useState(false);
-  const [accountBeingEdited, setAccountBeingEdited] =
+  const [bankAccountBeingEdited, setBankAccountBeingEdited] =
     useState<null | BankAccount>(null);
+  const [userAccountBeingEdited, setUserAccountBeingEdited] =
+    useState<null | User>(null);
+  const [isEditUserAccountModalOpen, setIsEditUserAccountModalOpen] =
+    useState(false);
 
   const toggleValueVisibily = useCallback(() => {
     setAreValuesVisible((prevState) => !prevState);
@@ -55,14 +64,24 @@ export function DashboardProvicer({ children }: { children: React.ReactNode }) {
     setIsNewTransactionModal(false);
   }, []);
 
-  const openEditAccountModal = useCallback((bankAccount: BankAccount) => {
-    setAccountBeingEdited(bankAccount);
+  const openEditBankAccountModal = useCallback((bankAccount: BankAccount) => {
+    setBankAccountBeingEdited(bankAccount);
     setisEditBankAccountModalOpen(true);
   }, []);
 
   const closeEditBankAccountModal = useCallback(() => {
-    setAccountBeingEdited(null);
+    setBankAccountBeingEdited(null);
     setisEditBankAccountModalOpen(false);
+  }, []);
+
+  const openEditUserAccountModal = useCallback((userAccount: User) => {
+    setUserAccountBeingEdited(userAccount);
+    setIsEditUserAccountModalOpen(true);
+  }, []);
+
+  const closeEditUserAccountModal = useCallback(() => {
+    setUserAccountBeingEdited(null);
+    setIsEditUserAccountModalOpen(false);
   }, []);
 
   return (
@@ -78,9 +97,13 @@ export function DashboardProvicer({ children }: { children: React.ReactNode }) {
         closeNewTransactionModal,
         newTransactionType,
         isEditBankAccountModalOpen,
-        openEditAccountModal,
+        openEditBankAccountModal,
         closeEditBankAccountModal,
-        accountBeingEdited,
+        bankAccountBeingEdited,
+        isEditUserAccountModalOpen,
+        userAccountBeingEdited,
+        openEditUserAccountModal,
+        closeEditUserAccountModal,
       }}
     >
       {children}
