@@ -35,4 +35,12 @@ export class UsersService {
       data: { firstName, lastName, phone, birthdate, email },
     });
   }
+
+  async remove(userId: string) {
+    await this.validateUserOwnershipService.validate(userId);
+
+    await this.usersRepo.delete({ where: { id: userId } });
+
+    return null;
+  }
 }

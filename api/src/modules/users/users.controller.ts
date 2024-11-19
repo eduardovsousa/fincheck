@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Put,
+} from '@nestjs/common';
 import { ActiveUserId } from 'src/shared/decorators/ActiveUserId';
 import { UsersService } from './service/users.service';
 import { UpdateUserDto } from './update-user.dto';
@@ -12,11 +20,17 @@ export class UsersController {
     return this.usersService.getUserById(userId);
   }
 
-  @Put(':id')
+  @Put(':userId')
   update(
     @ActiveUserId() userId: string,
     @Body() updateUpdateDto: UpdateUserDto,
   ) {
     return this.usersService.update(userId, updateUpdateDto);
+  }
+
+  @Delete(':userId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  remove(@ActiveUserId() userId: string) {
+    return this.usersService.remove(userId);
   }
 }
