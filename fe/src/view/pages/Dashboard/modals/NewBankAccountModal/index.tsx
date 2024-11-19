@@ -5,28 +5,30 @@ import { Input } from "../../../../components/Input";
 import { InputCurrency } from "../../../../components/InputCurrency";
 import { Modal } from "../../../../components/Modal";
 import { Select } from "../../../../components/Select";
-import { useNewAccountModalController } from "./useNewAccountModalController";
+import { useNewBankAccountModalController } from "./useNewBankAccountModalController";
 
-export function NewAccountModal() {
+export function NewBankAccountModal() {
   const {
-    closeNewAccountModal,
-    isNewAccountModalOpen,
+    closeNewBankAccountModal,
+    isNewBankAccountModalOpen,
     errors,
     handleSubmit,
     register,
     control,
     isLoading,
-  } = useNewAccountModalController();
+  } = useNewBankAccountModalController();
 
   return (
     <Modal
       title="Nova Conta"
-      open={isNewAccountModalOpen}
-      onClose={closeNewAccountModal}
+      open={isNewBankAccountModalOpen}
+      onClose={closeNewBankAccountModal}
     >
       <form onSubmit={handleSubmit}>
         <div>
-          <span className="text-gray-600 tracking-[-0.5px] text-xs">Saldo inicial</span>
+          <span className="text-gray-600 tracking-[-0.5px] text-xs">
+            Saldo inicial
+          </span>
           <div className="flex items-center gap-2">
             <span className="text-gray-600 tracking-[-0.5px] text-lg">R$</span>
 
@@ -50,7 +52,7 @@ export function NewAccountModal() {
             type="text"
             placeholder="Nome da Conta"
             error={errors.name?.message}
-            {...register('name')}
+            {...register("name")}
           />
 
           <Controller
@@ -65,16 +67,16 @@ export function NewAccountModal() {
                 value={value}
                 options={[
                   {
-                    value: 'CHECKING',
-                    label: 'Conta Corrente',
+                    value: "CHECKING",
+                    label: "Conta Corrente",
                   },
                   {
-                    value: 'INVESTMENT',
-                    label: 'Investimentos',
+                    value: "INVESTMENT",
+                    label: "Investimentos",
                   },
                   {
-                    value: 'CASH',
-                    label: 'Dinheiro Físico',
+                    value: "CASH",
+                    label: "Dinheiro Físico",
                   },
                 ]}
               />

@@ -9,6 +9,7 @@ interface DatePickerInputProps {
   className?: string;
   value?: Date;
   onChange?(date: Date): void;
+  placeholder?: string;
 }
 
 export function DatePickerInput({
@@ -16,6 +17,7 @@ export function DatePickerInput({
   value,
   onChange,
   error,
+  placeholder,
 }: DatePickerInputProps) {
   const [selectedDate, setSelectedDate] = useState(value ?? new Date());
 
@@ -37,7 +39,7 @@ export function DatePickerInput({
             )}
           >
             <span className="absolute text-gray-700 text-xs left-[13px] top-2 pointer-events-none">
-              Data
+              {placeholder ? placeholder : "Data"}
             </span>
             <span className="">{formatDate(selectedDate)}</span>
           </button>

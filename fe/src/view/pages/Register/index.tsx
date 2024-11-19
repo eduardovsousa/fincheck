@@ -16,7 +16,7 @@ export function Register() {
         <h1 className="text-2xl font-bold text-gray-900 tracking-[-1px]">
           Crie sua conta
         </h1>
-        <p className="space-x-2">
+        <p className="space-x-2 w-full">
           <span className="text-gray-700 tracking-[-0.5px]">
             Já possui uma conta?
           </span>
@@ -29,68 +29,68 @@ export function Register() {
         </p>
       </header>
 
-      <form onSubmit={handleSubmit} className="mt-[60px] flex flex-col gap-4">
-        <div className="flex space-x-2">
-          <Input
-            placeholder="Nome"
-            {...register("firstName")}
-            error={errors.firstName?.message}
-          />
-          <Input
-            placeholder="Sobrenome"
-            {...register("lastName")}
-            error={errors.lastName?.message}
-          />
-        </div>
+      <form
+        onSubmit={handleSubmit}
+        className="mt-[60px] flex flex-col gap-4 w-full"
+      >
+        <Input
+          placeholder="Nome"
+          {...register("firstName")}
+          error={errors.firstName?.message}
+        />
 
-        <div className="flex space-x-2 w-full">
-          <Controller
-            control={control}
-            name="birthdate"
-            defaultValue={new Date()}
-            render={({ field: { value, onChange } }) => (
-              <DatePickerInput
-                className="w-full"
-                error={errors.birthdate?.message}
-                value={value}
-                onChange={onChange}
-              />
-            )}
-          />
-        </div>
-        <div className="flex space-x-2">
-          <Input
-            type="email"
-            className="lowercase"
-            placeholder="E-mail"
-            {...register("email")}
-            error={errors.email?.message}
-          />
-          <Input
-            minLength={14}
-            maxLength={15}
-            placeholder="(xx) 9xxxx-xxxx"
-            {...register("phone")}
-            error={errors.phone?.message}
-            onChange={(e) => {
-              e.target.value = formatPhone(e.target.value);
-            }}
-          />
-        </div>
-        <div className="flex space-x-2">
-          <Input
-            type="password"
-            placeholder="Senha"
-            {...register("password")}
-            error={errors.password?.message}
-          />{" "}
-          <Input
-            type="password"
-            placeholder="Confirme a senha"
-            {...register("confirmPassword")}
-            error={errors.confirmPassword?.message}
-          />
-        </div>
+        <Input
+          placeholder="Sobrenome"
+          {...register("lastName")}
+          error={errors.lastName?.message}
+        />
+
+        <Controller
+          control={control}
+          name="birthdate"
+          defaultValue={new Date()}
+          render={({ field: { value, onChange } }) => (
+            <DatePickerInput
+              error={errors.birthdate?.message}
+              value={value}
+              onChange={onChange}
+              placeholder="Data de Nascimento"
+            />
+          )}
+        />
+
+        <Input
+          type="email"
+          className="lowercase"
+          placeholder="E-mail"
+          {...register("email")}
+          error={errors.email?.message}
+        />
+
+        <Input
+          minLength={14}
+          maxLength={15}
+          placeholder="(xx) 9xxxx-xxxx"
+          {...register("phone")}
+          error={errors.phone?.message}
+          onChange={(e) => {
+            e.target.value = formatPhone(e.target.value);
+          }}
+        />
+
+        <Input
+          type="password"
+          placeholder="Senha"
+          {...register("password")}
+          error={errors.password?.message}
+        />
+
+        <Input
+          type="password"
+          placeholder="Confirme a senha"
+          {...register("confirmPassword")}
+          error={errors.confirmPassword?.message}
+        />
 
         <Button type="submit" className="mt-2" isLoading={isLoading}>
           Criar conta

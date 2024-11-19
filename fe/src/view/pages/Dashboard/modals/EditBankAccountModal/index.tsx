@@ -1,18 +1,18 @@
 import { Controller } from "react-hook-form";
 import { Button } from "../../../../components/Button";
 import { ColorsDropdownInput } from "../../../../components/ColorsDropdownInput";
+import { ConfirmDeleteModal } from "../../../../components/ConfirmDeleteModal";
+import { TrashIcon } from "../../../../components/icons/TrashIcon";
 import { Input } from "../../../../components/Input";
 import { InputCurrency } from "../../../../components/InputCurrency";
 import { Modal } from "../../../../components/Modal";
 import { Select } from "../../../../components/Select";
-import { useEditAccountModalController } from "./useEditAccountModalController";
-import { TrashIcon } from "../../../../components/icons/TrashIcon";
-import { ConfirmDeleteModal } from "../../../../components/ConfirmDeleteModal";
+import { useEditBankAccountModalController } from "./useEditBankAccountModalController";
 
-export function EditAccountModal() {
+export function EditBankAccountModal() {
   const {
-    closeEditAccountModal,
-    isEditAccountModalOpen,
+    closeEditBankAccountModal,
+    isEditBankAccountModalOpen,
     errors,
     handleSubmit,
     register,
@@ -23,7 +23,7 @@ export function EditAccountModal() {
     handleCloseDeleteModal,
     handleDeleteAccount,
     isLoadingDelete,
-  } = useEditAccountModalController();
+  } = useEditBankAccountModalController();
 
   if (isDeleteModalOpen) {
     return (
@@ -41,8 +41,8 @@ export function EditAccountModal() {
   return (
     <Modal
       title="Editar Conta"
-      open={isEditAccountModalOpen}
-      onClose={closeEditAccountModal}
+      open={isEditBankAccountModalOpen}
+      onClose={closeEditBankAccountModal}
       rightAction={
         <button onClick={handleOpenDeleteModal}>
           <TrashIcon className="w-6 h-6 text-red-900" />

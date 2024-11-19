@@ -3,12 +3,12 @@ import "swiper/css";
 import { PlusIcon } from "@radix-ui/react-icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { cn } from "../../../../../app/utils/cn";
+import { formatCurrency } from "../../../../../app/utils/formatCurrency";
 import { Spinner } from "../../../../components/Spinner";
 import { EyeIcon } from "../../../../components/icons/EyeIcon";
 import { AccountCard } from "./AccountCard";
 import { SliderNavigation } from "./SliderNavigation";
 import { useAccountsController } from "./useAccountsController";
-import { formatCurrency } from "../../../../../app/utils/formatCurrency";
 
 export function Accounts() {
   const {
@@ -18,7 +18,7 @@ export function Accounts() {
     areValuesVisible,
     isLoading,
     accounts,
-    openNewAccountModal,
+    openNewBankAccountModal,
     toggleValueVisibily,
     currentBalance,
   } = useAccountsController();
@@ -68,7 +68,7 @@ export function Accounts() {
 
                 <button
                   className="mt-4 h-52 rounded-2xl border-2 border-dashed border-teal-600 flex flex-col items-center justify-center gap-4 text-white hover:bg-teal-950/5 transition-colors"
-                  onClick={openNewAccountModal}
+                  onClick={openNewBankAccountModal}
                 >
                   <div className="w-11 h-11 rounded-full border-2 border-dashed border-white flex items-center justify-center">
                     <PlusIcon className="w-6 h-6" />

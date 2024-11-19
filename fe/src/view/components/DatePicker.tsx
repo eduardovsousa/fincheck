@@ -14,6 +14,7 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
       locale={ptBR}
       selected={value}
       mode="single"
+      captionLayout="dropdown"
       onSelect={(date) => onChange?.(date ?? new Date())}
       classNames={{
         caption: "flex items-center justify-between",
