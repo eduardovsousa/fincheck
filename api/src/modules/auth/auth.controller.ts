@@ -37,7 +37,6 @@ export class AuthController {
         .status(HttpStatus.OK)
         .json({ message: 'OTP enviado com sucesso' });
     } catch (error) {
-      console.error(error);
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error });
     }
   }
