@@ -33,7 +33,7 @@ export function Accounts() {
   const { user } = useAuth();
 
   return (
-    <div className="bg-teal-900 rounded-2xl w-full h-full md:p-10 px-4 py-8 flex flex-col">
+    <div className="bg-teal-900 rounded-2xl w-full h-full px-4 py-8 md:p-8 flex flex-col">
       {isLoading && (
         <div className="w-full h-full flex items-center justify-center">
           <Spinner className="text-teal-950/50 fill-white w-10 h-10" />
