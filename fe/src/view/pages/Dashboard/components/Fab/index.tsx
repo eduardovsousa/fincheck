@@ -9,10 +9,10 @@ export function Fab() {
     useDashboardContext();
 
   return (
-    <div className="fixed right-4 bottom-4">
+    <div className="fixed right-4 bottom-4 z-10">
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
-          <button className="bg-teal-900 w-12 h-12 rounded-full flex items-center justify-center text-white">
+          <button className="bg-teal-900 w-12 h-12 rounded-full flex items-center justify-center text-white border">
             <PlusIcon className="w-6 h-6" />
           </button>
         </DropdownMenu.Trigger>

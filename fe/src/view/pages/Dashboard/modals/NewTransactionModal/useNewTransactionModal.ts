@@ -16,6 +16,9 @@ const schema = z.object({
   categoryId: z.string().nonempty("Informe a categoria"),
   bankAccountId: z.string().nonempty("Informe a conta"),
   date: z.date(),
+  isRecurring: z.boolean().optional(),
+  recurrenceInterval: z.string().optional(),
+  recurrenceEnd: z.date().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -33,6 +36,7 @@ export function useNewTransactionModal() {
     formState: { errors },
     control,
     reset,
+    watch,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
@@ -88,5 +92,6 @@ export function useNewTransactionModal() {
     categories,
     isLoading,
     mutateAsync,
+    watch,
   };
 }

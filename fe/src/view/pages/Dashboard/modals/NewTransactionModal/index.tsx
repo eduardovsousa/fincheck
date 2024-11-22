@@ -19,9 +19,11 @@ export function NewTransactionModal() {
     accounts,
     categories,
     isLoading,
+    watch,
   } = useNewTransactionModal();
 
   const isExpense = newTransactionType === "EXPENSE";
+  const isRecurring = watch("isRecurring");
 
   return (
     <Modal
@@ -108,6 +110,65 @@ export function NewTransactionModal() {
             )}
           />
         </div>
+
+        <Controller
+          control={control}
+          name="isRecurring"
+          defaultValue={false}
+          render={({ field: { onChange, value } }) => (
+            <div className="flex items-center gap-2 my-1">
+              <input
+                type="checkbox"
+                id="isRecurring"
+                className="accent-green-900"
+                onChange={(e) => onChange(e.target.checked)}
+                checked={value}
+              />
+              <label htmlFor="isRecurring" className="text-gray-600">
+                Transação recorrente
+              </label>
+            </div>
+          )}
+        />
+
+        {isRecurring && (
+          <div className="flex gap-3">
+            <Controller
+              control={control}
+              name="recurrenceInterval"
+              defaultValue="MONTHLY"
+              render={({ field: { onChange, value } }) => (
+                <Select
+                  placeholder="Intervalo de recorrência"
+                  onChange={onChange}
+                  className="w-48"
+                  value={value}
+                  options={[
+                    { value: "DAILY", label: "Diariamente" },
+                    { value: "WEEKLY", label: "Semanalmente" },
+                    { value: "MONTHLY", label: "Mensalmente" },
+                    { value: "YEARLY", label: "Anualmente" },
+                  ]}
+                />
+              )}
+            />
+
+            <Controller
+              control={control}
+              name="recurrenceEnd"
+              defaultValue={undefined}
+              render={({ field: { onChange, value } }) => (
+                <DatePickerInput
+                  error={errors.recurrenceEnd?.message}
+                  value={value}
+                  onChange={onChange}
+                  className="w-36"
+                  placeholder="Data de término"
+                />
+              )}
+            />
+          </div>
+        )}
 
         <Button type="submit" className="w-full mt-6" isLoading={isLoading}>
           Criar
