@@ -1,14 +1,11 @@
-import { Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { formatPhone } from "../../../app/utils/formatPhone";
 import { Button } from "../../components/Button";
-import { DatePickerInput } from "../../components/DatePickerInput";
 import { Input } from "../../components/Input";
 import { useRegisterController } from "./useRegisterController";
 
 export function Register() {
-  const { errors, handleSubmit, register, isLoading, control } =
-    useRegisterController();
+  const { errors, handleSubmit, register, isLoading } = useRegisterController();
 
   return (
     <>
@@ -45,18 +42,11 @@ export function Register() {
           error={errors.lastName?.message}
         />
 
-        <Controller
-          control={control}
-          name="birthdate"
-          defaultValue={new Date()}
-          render={({ field: { value, onChange } }) => (
-            <DatePickerInput
-              error={errors.birthdate?.message}
-              value={value}
-              onChange={onChange}
-              placeholder="Data de Nascimento"
-            />
-          )}
+        <Input
+          type="date"
+          placeholder="Data de Nascimento"
+          {...register("birthdate")}
+          error={errors.birthdate?.message}
         />
 
         <Input

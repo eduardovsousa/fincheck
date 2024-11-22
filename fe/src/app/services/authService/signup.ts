@@ -5,7 +5,7 @@ export interface SingupParams {
   firstName: string;
   lastName: string;
   email: string;
-  birthdate: Date;
+  birthdate: string;
   phone: string;
   password: string;
   confirmPassword: string;

@@ -14,7 +14,7 @@ const schema = z.object({
   lastName: z.string().nonempty("Informe o sobrenome"),
   email: z.string().nonempty("Informe o e-mail"),
   phone: z.string().nonempty("Informe o telefone"),
-  birthdate: z.date(),
+  birthdate: z.union([z.string(), z.date()]),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -25,6 +25,7 @@ export function useEditUserAccountModalController(user: User | null) {
     register,
     formState: { errors },
     control,
+    setValue,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -32,7 +33,7 @@ export function useEditUserAccountModalController(user: User | null) {
       lastName: user?.lastName,
       email: user?.email,
       phone: user?.phone,
-      birthdate: user ? new Date(user.birthdate) : new Date(),
+      birthdate: user?.birthdate,
     },
   });
 
@@ -108,5 +109,6 @@ export function useEditUserAccountModalController(user: User | null) {
     isDeleteAccountModalOpen,
     handleDeleteTransaction,
     isLoadingDeleteAccount,
+    setValue,
   };
 }

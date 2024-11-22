@@ -8,6 +8,10 @@ import { authService } from "../../../app/services/authService";
 import { SingupParams } from "../../../app/services/authService/signup";
 import { capitalizeFirstLetter } from "../../../app/utils/capitalizeFirstLetter";
 
+interface RegisterError {
+  response: { data: { message: string } };
+}
+
 const schema = z.object({
   firstName: z
     .string()
@@ -27,7 +31,7 @@ const schema = z.object({
     .nonempty("Telefone é obrigatório")
     .min(14, "Informe um telefone válido")
     .max(15, "Informe um telefone válido"),
-  birthdate: z.date(),
+  birthdate: z.string(),
   password: z
     .string()
     .nonempty("Senha é obrigatória")
@@ -79,8 +83,9 @@ export function useRegisterController() {
       const { accessToken } = await mutateAsync(data);
 
       signin(accessToken);
-    } catch {
-      toast.error("Credênciais inválidas!");
+    } catch (error) {
+      const { message } = (error as RegisterError).response.data;
+      toast.error(message);
     }
   });
 

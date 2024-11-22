@@ -1,9 +1,7 @@
-import { Controller } from "react-hook-form";
 import { User } from "../../../../../app/entities/User";
 import { formatPhone } from "../../../../../app/utils/formatPhone";
 import { Button } from "../../../../components/Button";
 import { ConfirmDeleteModal } from "../../../../components/ConfirmDeleteModal";
-import { DatePickerInput } from "../../../../components/DatePickerInput";
 import { TrashIcon } from "../../../../components/icons/TrashIcon";
 import { Input } from "../../../../components/Input";
 import { Modal } from "../../../../components/Modal";
@@ -23,7 +21,6 @@ export function EditUserAccountModal({
   const {
     handleSubmit,
     errors,
-    control,
     register,
     isLoading,
     handleOpenDeleteAccountModal,
@@ -47,7 +44,7 @@ export function EditUserAccountModal({
 
   return (
     <Modal
-      title="Editar conta"
+      title="Editar Perfil"
       open={open}
       onClose={onClose}
       rightAction={
@@ -70,18 +67,11 @@ export function EditUserAccountModal({
             error={errors.lastName?.message}
           />
 
-          <Controller
-            control={control}
-            name="birthdate"
-            defaultValue={new Date()}
-            render={({ field: { value, onChange } }) => (
-              <DatePickerInput
-                error={errors.birthdate?.message}
-                value={value}
-                onChange={onChange}
-                placeholder="Data de Nascimento"
-              />
-            )}
+          <Input
+            type="date"
+            placeholder="Data de Nascimento"
+            {...register("birthdate")}
+            error={errors.birthdate?.message}
           />
 
           <Input
