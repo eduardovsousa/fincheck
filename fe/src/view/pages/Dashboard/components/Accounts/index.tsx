@@ -42,20 +42,20 @@ export function Accounts() {
 
       {!isLoading && (
         <>
-          <div className="text-white flex items-center gap-3">
-            <span>
-              Olá, <strong>{user?.firstName}</strong>!
-            </span>
-            <button
-              className="w-8 h-8 flex items-center justify-center"
-              onClick={toggleValueVisibily}
-            >
-              <EyeIcon open={!areValuesVisible} />
-            </button>
-          </div>
+          <div className="text-white flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <span>
+                Olá, <strong>{user?.firstName}</strong>!
+              </span>
+              <button
+                className="w-8 h-8 flex items-center justify-center"
+                onClick={toggleValueVisibily}
+              >
+                <EyeIcon open={!areValuesVisible} />
+              </button>
+            </div>
 
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div>
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-2">
               <span className="tracking-[-0.5px] text-white block">
                 Saldo total
               </span>
@@ -71,16 +71,18 @@ export function Accounts() {
                 </strong>
               </div>
             </div>
+          </div>
 
+          <div className="flex md:items-center justify-between lg:gap-20 mt-12">
             <div>
               <span className="tracking-[-0.5px] text-white block">
                 Receita futura
               </span>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-start md:items-center gap-2">
                 <strong
                   className={cn(
-                    "text-xl tracking-[-1px] text-white md:mx-auto",
+                    "text-xl tracking-[-1px] text-white",
                     !areValuesVisible && "blur-md"
                   )}
                 >
@@ -98,10 +100,10 @@ export function Accounts() {
                 Despesa futura
               </span>
 
-              <div className="flex md:items-center gap-2">
+              <div className="flex items-start md:items-center gap-2">
                 <strong
                   className={cn(
-                    "text-xl tracking-[-1px] text-white md:mx-auto",
+                    "text-xl tracking-[-1px] text-white",
                     !areValuesVisible && "blur-md"
                   )}
                 >
@@ -117,10 +119,16 @@ export function Accounts() {
 
           <Divider />
 
-          <div className="flex flex-col md:flex-row md:items-center justify-start gap-4">
+          <div className="flex md:items-center justify-between gap-4 lg:gap-20">
             <div>
-              <span className="tracking-[-0.5px] text-white block">
-                Total de receitas futuras
+              <span className="tracking-[-0.5px] text-white flex">
+                Total de RF
+                <div className="group cursor-pointer relative flex items-center justify-center text-center text-xs ml-1.5 mb-2">
+                  (?)
+                  <div className="opacity-0 bg-black/70 text-white text-center text-xs rounded-lg py-2 absolute z-10 group-hover:opacity-100 bottom-full px-3 pointer-events-none w-28  transition-all -ml-20 lg:ml-0">
+                    Receitas futuras
+                  </div>
+                </div>
               </span>
 
               <div className="flex items-start md:items-center gap-2">
@@ -136,8 +144,14 @@ export function Accounts() {
             </div>
 
             <div>
-              <span className="tracking-[-0.5px] text-white block">
-                Total de despesas futuras
+              <span className="tracking-[-0.5px] text-white flex">
+                Total de DP
+                <div className="group cursor-pointer relative flex items-center justify-center text-center text-xs ml-1.5 mb-2">
+                  (?)
+                  <div className="opacity-0 bg-black/70 text-white text-center text-xs rounded-lg py-2 absolute z-10 group-hover:opacity-100 bottom-full px-3 pointer-events-none w-32 transition-all -ml-20 lg:ml-0">
+                    Despesas futuras
+                  </div>
+                </div>
               </span>
 
               <div className="flex items-start md:items-center gap-2">
@@ -155,7 +169,7 @@ export function Accounts() {
 
           <Divider />
 
-          <div className="flex-1 flex flex-col justify-end mt-10 md:mt-0">
+          <div className="flex-1 flex flex-col justify-end mt-8 md:mt-0">
             {accounts.length === 0 && (
               <>
                 <div className="mb-4" slot="container-start">
