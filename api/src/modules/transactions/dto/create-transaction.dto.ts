@@ -1,8 +1,11 @@
+import { TransactionRecurrenceType } from '@prisma/client';
 import {
+  IsBoolean,
   IsDateString,
   IsEnum,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
   IsUUID,
@@ -36,4 +39,16 @@ export class CreateTransactionDto {
   @IsNotEmpty()
   @IsEnum(TransactionType)
   type: TransactionType;
+
+  @IsOptional()
+  @IsBoolean()
+  isRecurring?: boolean;
+
+  @IsOptional()
+  @IsEnum(TransactionRecurrenceType)
+  recurrenceInterval?: string;
+
+  @IsOptional()
+  @IsDateString()
+  recurrenceEnd?: string;
 }

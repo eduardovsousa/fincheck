@@ -53,6 +53,9 @@ model BankAccount {
 
   transactions Transaction[]
 
+  futureIncome  Float? @default(0)
+  futureExpense Float? @default(0)
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("bank_accounts")
@@ -79,15 +82,27 @@ model Category {
   @@map("categories")
 }
 
+enum TransactionRecurrenceType {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+
+  @@map("transaction_recurrence_type")
+}
+
 model Transaction {
-  id            String          @id @default(uuid()) @db.Uuid
-  userId        String          @map("user_id") @db.Uuid
-  bankAccountId String          @map("bank_account_id") @db.Uuid
-  categoryId    String?         @map("category_id") @db.Uuid
-  name          String
-  value         Float
-  date          DateTime
-  type          TransactionType
+  id                 String                     @id @default(uuid()) @db.Uuid
+  userId             String                     @map("user_id") @db.Uuid
+  bankAccountId      String                     @map("bank_account_id") @db.Uuid
+  categoryId         String?                    @map("category_id") @db.Uuid
+  name               String
+  value              Float
+  date               DateTime
+  type               TransactionType
+  isRecurring        Boolean                    @default(false)
+  recurrenceInterval TransactionRecurrenceType?
+  recurrenceEnd      DateTime?
 
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   bankAccount BankAccount @relation(fields: [bankAccountId], references: [id], onDelete: Cascade)

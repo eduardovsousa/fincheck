@@ -16,14 +16,23 @@ export class TransactionsService {
     private readonly validateTransactionOwnershipService: ValidateTransactionOwnershipService,
   ) {}
 
-  async create(userId, createTransactionDto: CreateTransactionDto) {
-    const { bankAccountId, categoryId, date, name, type, value } =
-      createTransactionDto;
+  async create(userId: string, createTransactionDto: CreateTransactionDto) {
+    const {
+      bankAccountId,
+      categoryId,
+      date,
+      name,
+      type,
+      value,
+      isRecurring,
+      recurrenceInterval,
+      recurrenceEnd,
+    } = createTransactionDto;
 
     await this.validateEntitiesOwnership({ userId, bankAccountId, categoryId });
 
-    return this.transactionsRepo.create({
-      data: {
+    if (isRecurring && recurrenceInterval && recurrenceEnd) {
+      const transactions = this.generateRecurringTransactions(
         userId,
         bankAccountId,
         categoryId,
@@ -31,8 +40,73 @@ export class TransactionsService {
         name,
         type,
         value,
-      },
-    });
+        recurrenceInterval,
+        new Date(recurrenceEnd),
+      );
+
+      for (const transaction of transactions) {
+        await this.transactionsRepo.create({
+          data: transaction,
+        });
+      }
+
+      return transactions;
+    } else {
+      return this.transactionsRepo.create({
+        data: {
+          userId,
+          bankAccountId,
+          categoryId,
+          date,
+          name,
+          type,
+          value,
+          isRecurring: false,
+        },
+      });
+    }
+  }
+
+  generateRecurringTransactions(
+    userId: string,
+    bankAccountId: string,
+    categoryId: string,
+    startDate: string,
+    name: string,
+    type: string,
+    value: number,
+    recurrenceInterval?: string,
+    recurrenceEnd?: Date,
+  ) {
+    const transactions = [];
+    const currentDate = new Date(startDate);
+
+    recurrenceEnd.setDate(recurrenceEnd.getDate() + 1);
+
+    while (currentDate < recurrenceEnd) {
+      transactions.push({
+        userId,
+        bankAccountId,
+        categoryId,
+        date: currentDate.toISOString(),
+        name,
+        type,
+        value,
+        isRecurring: true,
+      });
+
+      if (recurrenceInterval === 'DAILY') {
+        currentDate.setDate(currentDate.getDate() + 1);
+      } else if (recurrenceInterval === 'WEEKLY') {
+        currentDate.setDate(currentDate.getDate() + 7);
+      } else if (recurrenceInterval === 'MONTHLY') {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+      } else if (recurrenceInterval === 'YEARLY') {
+        currentDate.setFullYear(currentDate.getFullYear() + 1);
+      }
+    }
+
+    return transactions;
   }
 
   async findAllByUserId(

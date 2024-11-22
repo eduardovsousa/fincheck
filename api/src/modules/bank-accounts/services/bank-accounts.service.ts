@@ -33,28 +33,82 @@ export class BankAccountsService {
           select: {
             type: true,
             value: true,
+            date: true, // Incluindo a data das transações
           },
         },
       },
     });
 
-    return bankAccounts.map(({ transactions, ...bankAccount }) => {
-      const totalTransactions = transactions.reduce(
-        (acc, transaction) =>
-          acc +
-          (transaction.type === 'INCOME'
-            ? transaction.value
-            : -transaction.value),
-        0,
-      );
+    const currentDate = new Date();
+    const currentMonthStart = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      1,
+    );
+    const currentMonthEnd = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() + 1,
+      0,
+    );
 
-      const currentBalance = bankAccount.initialBalance + totalTransactions;
+    return bankAccounts.map(
+      ({ transactions, futureIncome, futureExpense, ...bankAccount }) => {
+        const totalTransactions = transactions.reduce((acc, transaction) => {
+          const transactionDate = new Date(transaction.date);
 
-      return {
-        ...bankAccount,
-        currentBalance,
-      };
-    });
+          if (transactionDate <= currentDate) {
+            return (
+              acc +
+              (transaction.type === 'INCOME'
+                ? transaction.value
+                : -transaction.value)
+            );
+          }
+
+          if (
+            transactionDate >= currentMonthStart &&
+            transactionDate <= currentMonthEnd
+          ) {
+            return (
+              acc +
+              (transaction.type === 'INCOME'
+                ? transaction.value
+                : -transaction.value)
+            );
+          }
+
+          return acc;
+        }, 0);
+
+        const futureIncomeTotal = transactions.reduce((acc, transaction) => {
+          const transactionDate = new Date(transaction.date);
+          if (transactionDate > currentDate && transaction.type === 'INCOME') {
+            return acc + transaction.value;
+          }
+          return acc;
+        }, 0);
+
+        const futureExpenseTotal = transactions.reduce((acc, transaction) => {
+          const transactionDate = new Date(transaction.date);
+          if (transactionDate > currentDate && transaction.type === 'EXPENSE') {
+            return acc + transaction.value;
+          }
+          return acc;
+        }, 0);
+
+        const updatedFutureIncome = (futureIncome || 0) + futureIncomeTotal;
+        const updatedFutureExpense = (futureExpense || 0) + futureExpenseTotal;
+
+        const currentBalance = bankAccount.initialBalance + totalTransactions;
+
+        return {
+          ...bankAccount,
+          currentBalance,
+          futureIncome: updatedFutureIncome,
+          futureExpense: updatedFutureExpense,
+        };
+      },
+    );
   }
 
   async update(
