@@ -56,8 +56,14 @@ export function Accounts() {
             </div>
 
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-2">
-              <span className="tracking-[-0.5px] text-white block">
+              <span className="tracking-[-0.5px] text-white flex">
                 Saldo total
+                <div className="group cursor-pointer relative flex items-center justify-center text-center text-xs ml-1.5 mb-2">
+                  (?)
+                  <div className="opacity-0 bg-black/70 text-white text-center text-xs rounded-lg py-2 absolute z-10 group-hover:opacity-100 bottom-full px-3 pointer-events-none w-40 md:w-52 transition-all -ml-20 lg:ml-0">
+                    Saldo atualizado automaticamente
+                  </div>
+                </div>
               </span>
 
               <div className="flex items-center gap-2">
@@ -73,7 +79,7 @@ export function Accounts() {
             </div>
           </div>
 
-          <div className="flex md:items-center justify-between lg:gap-20 mt-12">
+          <div className="flex md:items-center justify-between lg:gap-20 mt-4">
             <div>
               <span className="tracking-[-0.5px] text-white block">
                 Receita futura
@@ -117,9 +123,7 @@ export function Accounts() {
             </div>
           </div>
 
-          <Divider />
-
-          <div className="flex md:items-center justify-between gap-4 lg:gap-20">
+          <div className="flex md:items-center justify-between gap-4 lg:gap-20 mt-4">
             <div>
               <span className="tracking-[-0.5px] text-white flex">
                 Total de RF
@@ -145,7 +149,7 @@ export function Accounts() {
 
             <div>
               <span className="tracking-[-0.5px] text-white flex">
-                Total de DP
+                Total de DF
                 <div className="group cursor-pointer relative flex items-center justify-center text-center text-xs ml-1.5 mb-2">
                   (?)
                   <div className="opacity-0 bg-black/70 text-white text-center text-xs rounded-lg py-2 absolute z-10 group-hover:opacity-100 bottom-full px-3 pointer-events-none w-32 transition-all -ml-20 lg:ml-0">

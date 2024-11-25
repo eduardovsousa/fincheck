@@ -104,12 +104,13 @@ export function useEditTransactionModalController(
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["bankAccounts"] });
 
+      onClose();
+
       toast.success(
         `${
           transaction?.type === "EXPENSE" ? "Despesa" : "Receita"
         } excluída com sucesso!`
       );
-      handleCloseDeleteModal();
     } catch {
       toast.error(
         `Erro ao excluir ${

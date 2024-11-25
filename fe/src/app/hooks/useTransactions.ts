@@ -7,7 +7,6 @@ export function useTransactions(filters: TransactionsFilters) {
     queryKey: ["transactions"],
     queryFn: () => transactionsService.getAll(filters),
     staleTime: Infinity,
-    enabled: false,
   });
 
   return {
