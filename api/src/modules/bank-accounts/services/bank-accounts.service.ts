@@ -33,23 +33,13 @@ export class BankAccountsService {
           select: {
             type: true,
             value: true,
-            date: true, // Incluindo a data das transações
+            date: true,
           },
         },
       },
     });
 
     const currentDate = new Date();
-    const currentMonthStart = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      1,
-    );
-    const currentMonthEnd = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth() + 1,
-      0,
-    );
 
     return bankAccounts.map(
       ({ transactions, futureIncome, futureExpense, ...bankAccount }) => {
@@ -57,18 +47,6 @@ export class BankAccountsService {
           const transactionDate = new Date(transaction.date);
 
           if (transactionDate <= currentDate) {
-            return (
-              acc +
-              (transaction.type === 'INCOME'
-                ? transaction.value
-                : -transaction.value)
-            );
-          }
-
-          if (
-            transactionDate >= currentMonthStart &&
-            transactionDate <= currentMonthEnd
-          ) {
             return (
               acc +
               (transaction.type === 'INCOME'

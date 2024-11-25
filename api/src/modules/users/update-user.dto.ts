@@ -1,10 +1,4 @@
-import {
-  IsDateString,
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  MinLength,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class UpdateUserDto {
   @IsString()
@@ -21,7 +15,7 @@ export class UpdateUserDto {
   email: string;
 
   @IsNotEmpty()
-  @IsDateString()
+  @IsString()
   birthdate: string;
 
   @IsString({ message: 'Telefone precisa ser um texto' })
